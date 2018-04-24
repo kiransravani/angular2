@@ -1,0 +1,59 @@
+﻿<div [ngClass]="{'ui-calendar':true,'ui-calendar-w-btn':showIcon}" [ngStyle]="style" [class]="styleClass">
+    <template [ngIf]="!inline">
+        <div style="width:100%!important;">
+            <input #inputfield type="text" [attr.required]="required" atpar-inputtext [value]="inputFieldValue" (focus)="onInputFocus(inputfield, $event)" (keydown)="onInputKeydown($event)" (click)="updatedTime()" (blur)="onInputBlur($event)" [id]="id"
+                   [readonly]="readonlyInput" (input)="onInput($event)" [ngStyle]="inputStyle" [class]="inputStyleClass" [placeholder]="placeholder||''" [disabled]="disabled" [attr.tabindex]="tabindex" style="width:100%;border:1px solid #ccc;border-radius:4px;">
+            <button type="button" class="btn btn-purple" [icon]="icon" atpar-button *ngIf="showIcon" (click)="onButtonClick($event,inputfield)"
+                    [ngClass]="{'ui-datepicker-trigger':true,'ui-state-disabled':disabled}" [disabled]="disabled"></button>
+        </div>
+    </template>
+    
+    <div #datepicker class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" [ngClass]="{'ui-datepicker-inline':inline,'ui-shadow':!inline,'ui-state-disabled':disabled,'ui-datepicker-timeonly':timeOnly}"
+         [ngStyle]="{'display': inline ? 'inline-block' : (overlayVisible ? 'block' : 'none')}" (click)="onDatePickerClick($event)" [@overlayState]="inline ? 'visible' : (overlayVisible ? 'visible' : 'hidden')" *ngIf="closeDiv">
+
+        <div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all" *ngIf="!timeOnly && (overlayVisible || inline)">
+            <ng-content select="p-header"></ng-content>
+            <a class="ui-datepicker-prev ui-corner-all" href="#" (click)="prevDecade($event)">
+                <span class="fa fa-angle-left"></span>
+            </a>
+            <a class="ui-datepicker-next ui-corner-all" href="#" (click)="nextDecade($event)">
+                <span class="fa fa-angle-right"></span>
+            </a>
+            <a class="" (click)="onClose()" title="Close">
+                <span class="fa fa-close close-btn-icon" style="cursor:pointer;"></span>
+            </a>
+            <div class="ui-datepicker-title">                
+                <span class="ui-datepicker-year">{{ToShowStart}}-{{ToShowFinish}}</span>
+            </div>
+        </div>
+        <table class="ui-datepicker-calendar" *ngIf="!timeOnly && (overlayVisible || inline)">            
+            <tbody>
+                <tr *ngFor="let week of dates" >
+                    <td class="col-md-3 col-md-3 col-xs-12 col-sm-12" *ngFor="let date of week" [ngClass]="{'ui-datepicker-other-month ui-state-disabled':date.otherMonth,
+								'ui-datepicker-current-day':isSelected(date),'ui-datepicker-today':date.today}">
+                        <a class="ui-state-default" href="#" *ngIf="date.otherMonth ? showOtherMonths : true"
+                           [ngClass]="{'ui-state-active':isSelected(date), 'ui-state-highlight':date.today,'ui-state-disabled':!date.selectable}"
+                           (click)="onYearSelect($event,date)">{{date.day}}</a>
+                    </td>
+                </tr>                
+            </tbody>
+        </table>        
+        <ng-content select="atpar-footer"></ng-content>
+    </div>
+</div>
+
+<style>
+    .close-btn-icon {
+        color: white !important;
+        position: absolute;
+        /*right: -24px;*/
+        right: 0;
+        background: #6c276a;
+        border-radius: 0;
+        top: 0px;
+        padding: 7px;
+    }
+    .close-btn-icon fa {
+            margin: -6px 0px 0 -3px;
+        }
+</style>

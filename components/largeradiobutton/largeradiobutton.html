@@ -1,0 +1,28 @@
+﻿<div class="ui-radiobutton ui-widget">
+    <div class="ui-helper-hidden-accessible" style="cursor:pointer!important;">
+        <input #rb type="radio" name="{{name}}" [attr.value]="value" [attr.tabindex]="tabindex"
+               [checked]="checked" (change)="onChange($event)" (focus)="onFocus($event)" (blur)="onBlur($event)">
+    </div>
+    <span class="ui-radiobutton-label radio-compo-label" id="label-custom" (click)="select()" *ngIf="label" title="{{label}}">{{label}}</span>
+    <div style="cursor:pointer!important;margin:-6px 0 0px 0!important;" (click)="handleClick()"
+         [ngClass]="{'ui-radiobutton-box ui-widget ui-state-default':true,
+                'ui-state-active':rb.checked,'ui-state-disabled':disabled,'ui-state-focus':focused}">
+        <span style="cursor:pointer!important;" class="ui-radiobutton-icon" [ngClass]="{'fa fa-circle':rb.checked}"></span>
+    </div>
+</div>
+<!--
+<label class="ui-radiobutton-label radio-compo-label" (click)="select()" *ngIf="label">{{label}}</label>-->
+<style>
+    /*span.radio-compo-label*/
+    #label-custom {
+        margin: 2px 0 -10px 26px;
+        /*css for larger lables*/
+        width: 180px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis !important;
+    }
+    .ui-radiobutton .ui-widget {
+    position: relative;
+     }
+</style>

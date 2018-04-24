@@ -1,0 +1,41 @@
+﻿<style>
+    .txt-focus-div {
+        background-color: black;
+        position: relative;
+        z-index: 99999 !important;
+        color: white;
+    }
+
+    table {
+        border: none !important;
+    }
+
+    p {
+        padding: 5px 5px 5px 5px;
+    }
+</style>
+<div class="row">
+    <div class="form-group">
+
+
+        <input type="text" (focus)="focusEvent(true)" class="form-control"
+               (focusout)="focusEvent(false)" (keyup)="onKey($event)" (keypress)="handelInput($event)" id={{id}}
+               [(ngModel)]="value" name={{id}} required autocomplete="off" [disabled]="disabled"  [readonly]="readonly"
+               autocorrect="off" autocapitalize="off" />
+            <div id="div_id_{{id}}" class="txt-focus-div">
+            <div *ngFor="let rule of validationrules">
+                <div *ngIf="ShowValidations && rule.showDiv">
+                    <p *ngIf="rule.showDiv">
+                        <!--<span *ngIf="rule.status">
+                            <span class="fa fa-check-circle-o" style="color:green;font-size:16px"></span>
+                        </span>
+                        <span *ngIf!="rule.status">
+                            <span class="fa fa-circle-thin" style="font-size:16px"></span>
+                        </span>-->
+                        <span>{{rule.ErrorMessage}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

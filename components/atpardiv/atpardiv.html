@@ -1,0 +1,143 @@
+﻿<style> 
+    .psw-m-b-10{
+        margin-bottom:10px!important;
+    }
+</style>
+<form class="form-horizontal form-label-left">
+    <div *ngFor="let atpardata of configs">
+        <div [ngSwitch]="atpardata.TYPE">
+            <div *ngSwitchCase="'TEXTBOX'">
+                <div class="form-group">
+                    <div style="clear:both;"></div>
+                    <!--<label for="test_step_element_id" class="control-label col-md-3 col-sm-3 col-xs-12">Minimum password length [title]="atpardata.TITLE" [validations]="atpardata.NEW_VALIDATION_RULES" </label>-->
+                    <label for="test_step_element_id" class="control-label col-md-3 col-sm-3 col-xs-12">{{atpardata.FRIENDLY_NAME }}</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12 ">
+                        <atpar-text [(ngModel)]="atpardata.PARAMETER_VALUE"   [ngModelOptions]="{standalone: true}" [title]="atpardata.TOOL_TIP_INFO"  [name]="atpardata.TAB_ID+atpardata.PARAMETER_ID" [id]="atpardata.TAB_ID+atpardata.PARAMETER_ID">
+                        </atpar-text>
+                    </div>
+                    <div class="help_txt col-sm-6 col-md-6" *ngIf="atpardata.TYPE != 'FILE' && atpardata.TYPE != 'RADIO'">
+                        {{atpardata.DESCRIPTION}}
+                    </div>
+                </div>
+            </div>
+            <div *ngSwitchCase="'LABEL'">
+                <div class="form-group">
+                    <div style="clear:both;"></div>
+                    <label for="industry" class="control-label col-md-3 col-sm-3 col-xs-12">{{atpardata.FRIENDLY_NAME }}</label>
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12" style="text-align:left;">
+                        {{atpardata.DEFAULT_VALUE}}
+                    </div>
+                    <div class="help_txt col-sm-6 col-md-6" *ngIf="atpardata.TYPE != 'FILE' && atpardata.TYPE != 'RADIO'">
+                        {{atpardata.DESCRIPTION}}
+                    </div>
+                </div>
+            </div>
+            <div *ngSwitchCase="'PASSWORD'">
+                <div class="form-group">
+                    <div style="clear:both;"></div>
+                    <label for="industry" class="control-label col-md-3 col-sm-3 col-xs-12">{{atpardata.FRIENDLY_NAME }}</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12 ">
+                        <input type="password" class="form-control mb-10 psw-m-b-10"  [ngModelOptions]="{standalone: true}" [name]="atpardata.TAB_ID+atpardata.PARAMETER_ID" [(ngModel)]="atpardata.PARAMETER_VALUE" (change)="ontxtpwdchange(atpardata,$event)" />
+                    </div>
+                    <div class="help_txt col-sm-6 col-md-6" *ngIf="atpardata.TYPE != 'FILE' && atpardata.TYPE != 'RADIO'">
+                        {{atpardata.DESCRIPTION}}
+                    </div>
+                </div>
+            </div>
+            <div *ngSwitchCase="'DROPDOWN'">
+                <div class="form-group">
+                    <div style="clear:both;"></div>
+                    <label for="test_step_element_id" class="control-label col-md-3 col-sm-3 col-xs-12">{{atpardata.FRIENDLY_NAME }}</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <atpar-select [options]="atpardata.DEFAULT_VALUE" [ngModelOptions]="{standalone: true}" [style]="{'width':'100%'}" [SelectedLabel]="atpardata.PARAMETER_VALUE" [id]="atpardata.TAB_ID+atpardata.PARAMETER_ID"  [(ngModel)]="atpardata.PARAMETER_VALUE" (onChange)="onChange(atpardata,$event)">
+                        </atpar-select>
+                        <!--<atpar-select  [options]="atpardata.DEFAULT_VALUE" [SelectedValue]="atpardata.PARAMETER_VALUE" [(ngModel)]="atpardata.PARAMETER_VALUE"  (onChange)="onChange(atpardata,$event)" [ngModelOptions]="{standalone: true}" filter="filter"></atpar-select>-->
+                    </div>
+                    <div class="help_txt col-sm-6 col-md-6" *ngIf="atpardata.TYPE != 'FILE' && atpardata.TYPE != 'RADIO'">
+                        {{atpardata.DESCRIPTION}}
+                    </div>
+
+                </div>
+            </div>
+            <div *ngSwitchCase="'CHECKBOX'">
+                <div class="form-group">
+                    <div style="clear:both;"></div>
+                    <label for="url_live_version" class="control-label col-md-3 col-sm-3 col-xs-12">
+                        {{atpardata.FRIENDLY_NAME }}
+                    </label>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <atpar-switch [(ngModel)]="atpardata.PARAMETER_VALUE" [ngModelOptions]="{standalone: true}" [checked]="atpardata.PARAMETER_VALUE" (change)="change(atpardata,$event)">
+                        </atpar-switch>
+                    </div>
+                    <div class="help_txt col-sm-6 col-md-6" *ngIf="atpardata.TYPE != 'FILE' && atpardata.TYPE != 'RADIO'">
+                        {{atpardata.DESCRIPTION}}
+                    </div>
+                </div>
+            </div>
+
+            <div *ngSwitchCase="'RADIO'">
+                <div class="form-group">
+                    <div style="clear:both;"></div>
+                    <label for="industry" class="control-label col-md-3 col-sm-3 col-xs-12">Protocol</label>
+                    <div class="col-md-1 col-sm-1 col-xs-12" *ngFor="let val of atpardata.DEFAULT_VALUE.split(',')">
+                        <div class="">
+                            <atpar-radioButton [name]="atpardata.TAB_ID+atpardata.PARAMETER_ID" [disabled]="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="atpardata.PARAMETER_VALUE" (onClick)="onClick(atpardata,$event)" value="{{val}}" label="{{val}}">
+                            </atpar-radioButton>
+                        </div>
+                        <div style="clear:both;"></div>
+                    </div>
+                    <div class="help_txt col-xs-12 col-sm-3 col-sm-offset-1 col-md-3 col-md-offset-1" *ngIf="atpardata.TYPE == 'RADIO' ">
+                        <p>{{atpardata.DESCRIPTION}}</p>
+                    </div>
+                </div>
+            </div>
+            <div *ngSwitchCase="'FILE'">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">{{atpardata.FRIENDLY_NAME }}</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12" *ngIf="atpardata.TAB_ID=='ATPAR_SYSTEM'">
+                        <!--<input #file type="file" (change)="fileUpload($event)" id="btnFileUpload">-->
+                        <div class="input-group image-preview ">
+                            <input placeholder="No File Chosen" type="text" class="form-control image-preview-filename" disabled="disabled" title="{{userSelectedFile}}" [(ngModel)]="userSelectedFile" [ngModelOptions]="{standalone: true}" />
+                            <!-- don't give a name === doesn't send on POST/GET -->
+                            <span class="input-group-btn">
+                                <!-- image-preview-clear button -->
+                                <button type="button" class="btn btn-default image-preview-clear" style="display:none;"> <span class="glyphicon glyphicon-remove"></span> Clear </button>
+                                <!-- image-preview-input -->
+                                <div class="btn btn-default image-preview-input">
+                                    <span class="glyphicon glyphicon-folder-open"></span> <span class="image-preview-input-title">Browse</span>
+                                    <input type="file" accept="image/*" (change)="fileChange($event)" id="{{atpardata.key}}" name="input-file-preview" />
+                                    <!-- rename it -->
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12" *ngIf="atpardata.TAB_ID!='ATPAR_SYSTEM'">
+                        <atpar-text [(ngModel)]="atpardata.PARAMETER_VALUE" [ngModelOptions]="{standalone: true}" [name]="atpardata.TAB_ID+atpardata.PARAMETER_ID" [id]="atpardata.TAB_ID+atpardata.PARAMETER_ID">
+                        </atpar-text>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 help_txt" *ngIf="uploadFlag">
+                      {{atpardata.DESCRIPTION}}
+                    </div>
+                </div>
+                <!--<div class="form-group">
+                    <div style="clear:both;"></div>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">{{atpardata.FRIENDLY_NAME }}</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12" *ngIf="atpardata.TAB_ID=='ATPAR_SYSTEM'">
+                        <input #file type="file" accept="image/*" (change)="fileChange($event)" id="{{atpardata.key}}">
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12" *ngIf="atpardata.TAB_ID!='ATPAR_SYSTEM'">
+                        <atpar-text [(ngModel)]="atpardata.PARAMETER_VALUE" [ngModelOptions]="{standalone: true}" [name]="atpardata.TAB_ID+atpardata.PARAMETER_ID" [id]="atpardata.TAB_ID+atpardata.PARAMETER_ID">
+                        </atpar-text>
+                        
+                    </div>
+                    <div class="help_txt col-md-6 col-sm-6 col-xs-12" *ngIf="uploadFlag">
+                        {{atpardata.DESCRIPTION}}
+                    </div>
+                </div>-->
+            </div>
+        </div>
+        <!--<div class="help_txt col-sm-6 col-md-6" *ngIf="atpardata.TYPE != 'FILE' && atpardata.TYPE != 'RADIO'">
+            {{atpardata.DESCRIPTION}}
+        </div>-->
+    </div>
+</form>

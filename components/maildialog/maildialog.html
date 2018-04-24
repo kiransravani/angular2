@@ -1,0 +1,16 @@
+﻿<div #container [ngClass]="{'modal fade':true,'ui-dialog-rtl':rtl,'ui-dialog-draggable':draggable}" [ngStyle]="style" [class]="styleClass"
+     [style.display]="visible ? 'block' : 'none'" [style.width.px]="width" [style.height.px]="height" (mousedown)="moveOnTop()" [@dialogState]="visible ? 'visible' : 'hidden'" style="top:35%;">
+    <div class="modal-content">
+        <div class="modal-header" (mousedown)="initDrag($event)" (mouseup)="endDrag($event)" *ngIf="showHeader" style="padding:10px !important">
+            <span class="modal-title" *ngIf="header">{{header}}</span>
+            <i class="fa fa-close" style="float: right;color: white;font-size: 18px;cursor: pointer;" title="close" (click)="hide($event)"></i>
+        </div>
+
+        <div #content class="modal-body">
+            <ng-content></ng-content>
+        </div>
+
+    </div>
+    <div *ngIf="resizable" class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"
+         (mousedown)="initResize($event)"></div>
+</div>

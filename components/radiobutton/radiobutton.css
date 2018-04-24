@@ -1,0 +1,66 @@
+﻿ .ui-radiobutton {
+    display:inline-block;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-right: .25em;
+}
+
+.ui-radiobutton-box {
+    width: 1.125em;
+    height: 1.125em;
+    line-height: 1.125em;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+    text-align: center;
+}
+
+.ui-radiobutton-icon {
+    display: block;
+    font-size: .6em;
+    line-height: inherit;
+}
+ 
+.ui-radiobutton, .ui-radiobutton-label {
+    vertical-align: middle;
+    display: inline-block;
+}
+.ui-widget { 
+	font-family: Monaco; 
+	font-size: 1em;
+    margin-top:4px;
+}
+.ui-helper-hidden-accessible {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+.ui-state-default {
+    background-color: #ffffff;
+    border-color: #a09f9f;
+    color: #373a3c;
+   border: 1px solid #6c276a!important;
+}
+.ui-state-active
+{
+    color: #6c276a!important;
+    border: 1px solid #6c276a!important;
+    background: transparent!important;
+}
+.ui-state-disabled
+	  {
+		 cursor: default !important;   
+	  }
+.ui-state-focus
+{
+    outline: none;
+}
+.ui-radiobutton-icon {
+    font-size: 0.5em;
+ 
+}

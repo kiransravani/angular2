@@ -1,0 +1,23 @@
+﻿<div #container [ngClass]="{'modal fade':true,'ui-dialog-rtl':rtl,'ui-dialog-draggable':draggable}" [ngStyle]="style" [class]="styleClass"
+     [style.display]="visible ? 'block' : 'none'" [style.width.px]="width" [style.height.px]="height" (mousedown)="moveOnTop()" [@dialogState]="visible ? 'visible' : 'hidden'" style="top:35%;">
+    <div class="modal-content">
+        <div class="modal-header" (mousedown)="initDrag($event)" (mouseup)="endDrag($event)" *ngIf="showHeader">
+            <!--<a *ngIf="closable" class="close" href="#" role="button" (click)="hide($event)">&times;</a>-->
+            <h4 class="modal-title" *ngIf="header">{{header}}</h4>
+            <span class="ui-dialog-title" *ngIf="headerFacet">
+                <ng-content select="atpar-header"></ng-content>
+            </span>
+        </div>
+
+        <div #content class="modal-body">
+            <ng-content></ng-content>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-purple" (click)="hide($event)">Close &nbsp;<i class="fa fa-close"></i></button>
+            <ng-content select="atpar-footer"></ng-content>
+        </div>
+
+    </div>
+    <div *ngIf="resizable" class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"
+         (mousedown)="initResize($event)"></div>
+</div>
