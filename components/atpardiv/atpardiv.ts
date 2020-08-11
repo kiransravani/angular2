@@ -13,6 +13,7 @@ export class Atpardiv {
 
     @Input() configs: any[];
     @Input() uploadFlag: boolean = true;
+	@Input() uploadFlagTest: boolean = true;
     // @Input() name: string;
     //option: any;
     selectedValue: any = "";
